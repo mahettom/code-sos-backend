@@ -12,11 +12,20 @@ router.get('/', async (req, res, next) => {
         next(err)
     }
 })
-
-
-
-
-
-
+router.get(':profileId', async (req, res, next) => {
+    try {
+        const user = await User.findById(req.params.profileId)
+        const myPost = await FreePost.find({ owner: user._id })
+        res.json('profile', { user, myPost })
+    } catch (err) {
+        next(err)
+    }
+})
 
 module.exports = router;
+
+
+
+
+
+
