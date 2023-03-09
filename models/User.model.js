@@ -19,8 +19,11 @@ const userSchema = new Schema(
     profilePic: {
       type: String,
     },
-    userType: {
-      type: String,
+    tutor: {
+      type: Boolean,
+    },
+    available: {
+      type: Boolean,
     },
   },
   {
