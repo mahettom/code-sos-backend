@@ -1,6 +1,9 @@
 const { Schema, model } = require("mongoose");
 
+
+
 const freePostSchema = new Schema({
+
     question: {
         type: String,
         require: true
@@ -16,6 +19,8 @@ const freePostSchema = new Schema({
     {
         timestamps: true
     });
+
+
 
 const FreePost = model("FreePost", freePostSchema);
 module.exports = FreePost
