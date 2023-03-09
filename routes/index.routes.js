@@ -13,5 +13,7 @@ router.use('/posts', require('./posts.routes'))
 
 router.use('/profile', require('./profile.routes'))
 
+router.use('/available-tutors', require('./availableTutors.routes'))
+
 
 module.exports = router;
