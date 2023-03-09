@@ -47,11 +47,47 @@ router.post('/signup', (req, res, next) => {
 
 
 // POST  /auth/login
+router.post('/login', (req, res, next) => {
+    const { username, password } = req.body
 
+    if (email === '' || password === '') {
+        res.status(400).json({ message: 'You need to provide an email and a password' })
+        return
+    }
+
+    User.findOne({ username })
+        .then((foundUser) => {
+
+            if (!foundUser) {
+                res.status(401).json({ message: 'Username not found' })
+                return
+            }
+
+            const passwordCorrect = bcrypt.compareSync(password, foundUser.password)
+
+            if (passwordCorrect) {
+
+                const { _id, email, username } = foundUser
+
+                const payload = { _id, email, username }
+
+                const authToken = jwt.sign(
+                    payload,
+                    process.env.TOKEN_SECRET,
+                    { algorithm: 'HS256', expiresIn: '1d' }
+                )
+                res.status(200).json({ authToken: authToken })
+            }
+            else {
+                res.status(401).json({ message: 'Unable to authenticate the user' })
+            }
+        })
+        .catch(error => res.status(500).json({ message: 'Internal server error' }))
+})
 
 
 // GET  /auth/verify
-// ...
+// router.get('/') isAuthenticated (req, res, next)
 
 
 module.exports = router;

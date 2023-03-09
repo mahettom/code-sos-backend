@@ -7,13 +7,15 @@ router.get("/", (req, res, next) => {
 });
 
 
-router.use('/auth', require('./auth.routes'))
+// router.use('/auth', require('./auth.routes'))
 
-router.use('/posts', require('./posts.routes'))
+// router.use("/", isAuthenticated);
 
-router.use('/profile', require('./profile.routes'))
+// router.use('/posts', require('./posts.routes'))
 
-router.use('/available-tutors', require('./availableTutors.routes'))
+// router.use('/profile', require('./profile.routes'))
+
+// router.use('/available-tutors', require('./availableTutors.routes'))
 
 
 module.exports = router;
