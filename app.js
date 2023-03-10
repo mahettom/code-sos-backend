@@ -9,7 +9,7 @@ require("./db");
 // https://www.npmjs.com/package/express
 const express = require("express");
 
-const { isAuthenticated } = require('./middleware/isAuthenticated')
+const isAuthenticated = require('./middleware/isAuthenticated')
 
 const app = express();
 
@@ -20,7 +20,7 @@ require("./config")(app);
 const authRouter = require("./routes/auth.routes");       //  <== IMPORT
 app.use("/auth", authRouter);                             //  <== ADD
 
-app.use("/", isAuthenticated);
+app.use(isAuthenticated);
 
 const indexRoutes = require("./routes/index.routes");
 app.use("/", indexRoutes);
