@@ -20,12 +20,10 @@ const userSchema = new Schema(
     profilePic: {
       type: String,
     },
-    tutor: {
+    isTutor: {
       type: Boolean,
-    },
-    available: {
-      type: Boolean,
-    },
+      default: false,
+    }
   },
   {
     timestamps: true,

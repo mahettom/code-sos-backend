@@ -2,6 +2,7 @@ const express = require("express");//create the router file
 const bcrypt = require('bcryptjs'); //encrypting the password before saving to the database
 const jwt = require("jsonwebtoken");//creates and signs the new token
 const User = require("../models/User.model");
+const isAuthenticated = require("../middleware/isAuthenticated");
 
 const router = express.Router();
 const saltRounds = 10;
