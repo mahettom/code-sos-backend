@@ -50,12 +50,12 @@ router.post('/signup', (req, res, next) => {
 router.post('/login', (req, res, next) => {
     const { username, password } = req.body
 
-    if (email === '' || password === '') {
-        res.status(400).json({ message: 'You need to provide an email and a password' })
+    if (username === '' || password === '') {
+        res.status(400).json({ message: 'You need to provide an username and a password' })
         return
     }
 
-    User.findOne({ username })
+    User.findOne({ username }).select('password')
         .then((foundUser) => {
 
             if (!foundUser) {
@@ -64,7 +64,7 @@ router.post('/login', (req, res, next) => {
             }
 
             const passwordCorrect = bcrypt.compareSync(password, foundUser.password)
-
+            console.log(passwordCorrect)
             if (passwordCorrect) {
 
                 const { _id, email, username } = foundUser
@@ -74,7 +74,7 @@ router.post('/login', (req, res, next) => {
                 const authToken = jwt.sign(
                     payload,
                     process.env.TOKEN_SECRET,
-                    { algorithm: 'HS256', expiresIn: '1d' }
+                    { algorithm: 'HS256', expiresIn: "6h" }
                 )
                 res.status(200).json({ authToken: authToken })
             }
