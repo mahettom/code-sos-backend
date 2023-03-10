@@ -5,7 +5,7 @@ const User = require('./../models/User.model')
 
 
 
-router.get('/posts', async (req, res, next) => {
+router.get('/', async (req, res, next) => {
     try {
         const allPosts = await FreePost.find().populate('owner')
         res.json(allPosts)
@@ -15,8 +15,16 @@ router.get('/posts', async (req, res, next) => {
     }
 })
 
-
-
+router.post('/create', async (req, res, next) => {
+    console.log(req.user)
+    const { question, code_example } = req.body
+    try {
+        const postToCreate = await FreePost.create({ question, code_example, owner: req.user._id })
+        res.json(postToCreate)
+    } catch (error) {
+        next(error)
+    }
+})
 
 
 
