@@ -26,6 +26,15 @@ router.post('/create', async (req, res, next) => {
     }
 })
 
+router.get('/:postId', async (req, res, next) => {
+    try {
+        const postDetails = await FreePost.findById(req.params.postId)
+        res.json(postDetails)
+    } catch (error) {
+        next(error)
+    }
+})
+
 
 
 
