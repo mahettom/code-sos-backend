@@ -6,13 +6,11 @@ const router = express.Router();
 router.get('/', async (req, res, next) => {
     try {
         const tutors = await User.find({ isTutor: true })
-        console.log(tutors)
         res.json(tutors)
     } catch (error) {
         next(error)
     }
 })
-
 
 
 
