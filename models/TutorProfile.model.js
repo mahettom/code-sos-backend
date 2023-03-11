@@ -12,5 +12,6 @@ const tutorProfileSchema = new Schema(
         },
     }
 )
+
 const TutorProfile = model('TutorProfile', tutorProfileSchema)
 module.exports = TutorProfile
