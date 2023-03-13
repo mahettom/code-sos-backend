@@ -1,6 +1,6 @@
 const Tutor = require("../models/TutorProfile.model");
 const User = require("../models/User.model");
-cosnt fileUpload from './connfig/cloudinary'
+const fileUpload = '../config/cloudinary.js'
 
 const router = require("express").Router();
 
