@@ -4,7 +4,6 @@ const FreePost = require('./../models/FreePost.model')
 const User = require('./../models/User.model')
 
 
-
 router.get('/', async (req, res, next) => {
     try {
         const allPosts = await FreePost.find().populate('owner')
