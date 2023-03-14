@@ -20,10 +20,11 @@ require("./config")(app);
 const authRouter = require("./routes/auth.routes");       //  <== IMPORT
 app.use("/auth", authRouter);                             //  <== ADD
 
-app.use(isAuthenticated);
-
 const indexRoutes = require("./routes/index.routes");
 app.use("/", indexRoutes);
+
+app.use(isAuthenticated);
+
 
 const availableTutors = require("./routes/availableTutors.routes");
 app.use("/available-tutors", availableTutors);
