@@ -9,7 +9,7 @@ const saltRounds = 10;
 
 // POST  /auth/signup
 router.post('/signup', (req, res, next) => {
-    const { email, password, username } = req.body
+    const { email, password, username, isTutor } = req.body
 
     if (email === '' || password === '' || username === '') {
         res.status(400).json({ message: "Provide email, password, username" })
@@ -33,11 +33,11 @@ router.post('/signup', (req, res, next) => {
             }
             const salt = bcrypt.genSaltSync(saltRounds)
             const hashedPassword = bcrypt.hashSync(password, salt)
-            return User.create({ email, password: hashedPassword, username })
+            return User.create({ email, password: hashedPassword, username, isTutor })
         })
         .then((createdUser) => {
-            const { email, username, _id } = createdUser
-            const user = { email, username, _id }
+            const { email, username, _id, isTutor } = createdUser
+            const user = { email, username, _id, isTutor }
             res.status(201).json({ user: user })
         })
         .catch(err => {
