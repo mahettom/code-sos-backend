@@ -4,7 +4,7 @@ const jsonWebToken = require('jsonwebtoken')
 async function isAuthenticated(req, res, next) {
     try {
         let token = req.headers.authorization
-        // console.log(token)
+        console.log(token)
         if (!token) {
             return res.status(500).json({ message: 'No Token found.' })
         }
