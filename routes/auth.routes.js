@@ -3,13 +3,16 @@ const bcrypt = require('bcryptjs'); //encrypting the password before saving to t
 const jwt = require("jsonwebtoken");//creates and signs the new token
 const User = require("../models/User.model");
 const isAuthenticated = require("../middleware/isAuthenticated");
+const fileUpload = require('../config/cloudinary.js')
 
 const router = express.Router();
 const saltRounds = 10;
 
 // POST  /auth/signup
-router.post('/signup', (req, res, next) => {
+router.post('/signup', fileUpload.single('profilePic'), (req, res, next) => {
     const { email, password, username, isTutor } = req.body
+    const image = req.file
+    console.log(image)
 
     if (email === '' || password === '' || username === '') {
         res.status(400).json({ message: "Provide email, password, username" })
@@ -33,7 +36,7 @@ router.post('/signup', (req, res, next) => {
             }
             const salt = bcrypt.genSaltSync(saltRounds)
             const hashedPassword = bcrypt.hashSync(password, salt)
-            return User.create({ email, password: hashedPassword, username, isTutor })
+            return User.create({ email, password: hashedPassword, username, isTutor, profilePic: image.path })
         })
         .then((createdUser) => {
             const { email, username, _id, isTutor } = createdUser
