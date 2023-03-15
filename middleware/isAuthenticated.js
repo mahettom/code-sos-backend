@@ -9,6 +9,7 @@ async function isAuthenticated(req, res, next) {
             return res.status(500).json({ message: 'No Token found.' })
         }
         token = token.replace('Bearer ', '')
+
         const payload = jsonWebToken.verify(token, process.env.TOKEN_SECRET)
         const user = await User.findById(payload._id)
         req.user = user
