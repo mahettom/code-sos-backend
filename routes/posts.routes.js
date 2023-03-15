@@ -56,6 +56,8 @@ router.patch('/:postId', async (req, res, next) => {
         next(error)
     }
 })
+
+
 router.delete('/:postId', async (req, res, next) => {
     try {
 

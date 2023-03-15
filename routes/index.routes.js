@@ -11,6 +11,7 @@ router.get("/", (req, res, next) => {
 });
 
 router.post("/images", fileUpload.single('picture_url'), (req, res, next) => {
+  console.log(req)
   res.json({ image: req.file.path })
 })
 // router.get("/test", async (req, res, next) => {

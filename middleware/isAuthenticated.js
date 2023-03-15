@@ -16,7 +16,6 @@ async function isAuthenticated(req, res, next) {
         // Everything went well go to the next route
         next()
     } catch (error) {
-        console.log(error)
         return res.status(500).json({ message: 'Invalid Token.', error })
     }
 }
