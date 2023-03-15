@@ -10,6 +10,11 @@ const helpRequestSchema = new Schema({
         ref: 'User'
         //Need to connect user email with extend
     },
+    tutor: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+        //Need to connect user email with extend
+    }
 },
     {
         timestamps: true
