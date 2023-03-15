@@ -28,7 +28,7 @@ router.post('/create', async (req, res, next) => {
 router.get('/:postId', async (req, res, next) => {
     try {
 
-        const postDetails = await FreePost.findById(req.params.postId)
+        const postDetails = await FreePost.findById(req.params.postId).populate('owner')
         res.json(postDetails)
     } catch (error) {
         next(error)
@@ -52,7 +52,7 @@ router.patch('/:postId', async (req, res, next) => {
             { new: true },
         )
         console.log('updatedPost', updatedPost)
-        res.json({ updatedPost })
+        res.status(202).json({ updatedPost })
     } catch (error) {
         next(error)
     }
