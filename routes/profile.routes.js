@@ -31,7 +31,7 @@ router.get('/:profileId', async (req, res, next) => {
     }
 })
 
-router.post('/:profileId', async (req, res, next) => {
+router.post('/help/:profileId', async (req, res, next) => {
     try {
 
         const owner = req.user._id
