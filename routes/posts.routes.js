@@ -1,4 +1,5 @@
 const express = require('express');
+const Comment = require('../models/Comment.model');
 const router = express.Router();
 const FreePost = require('./../models/FreePost.model')
 const User = require('./../models/User.model')
@@ -29,7 +30,8 @@ router.get('/:postId', async (req, res, next) => {
     try {
 
         const postDetails = await FreePost.findById(req.params.postId).populate('owner')
-        res.json(postDetails)
+        const allComments = await Comment.find({ posting: req.params.postId })
+        res.json({ postDetails, allComments })
     } catch (error) {
         next(error)
     }
@@ -70,5 +72,18 @@ router.delete('/:postId', async (req, res, next) => {
     }
 })
 
+router.post('/:postId', async (req, res, next) => {
+
+    const author = req.user._id
+    const { comment } = req.body
+    const posting = req.params.postId
+
+    try {
+        const commentToCreate = await Comment.create({ author, comment, posting })
+        res.json(commentToCreate)
+    } catch (error) {
+        next(error)
+    }
+})
 
 module.exports = router;
