@@ -15,11 +15,11 @@ router.get('/', async (req, res, next) => {
 })
 
 router.post('/create', async (req, res, next) => {
-    // console.log(req.user)
+    console.log(req.body)
     const { question, code_example } = req.body
     try {
         const postToCreate = await FreePost.create({ question, code_example, owner: req.user._id })
-        res.json(postToCreate)
+        res.status(201).json(postToCreate)
     } catch (error) {
         next(error)
     }
