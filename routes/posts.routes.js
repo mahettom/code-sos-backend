@@ -48,11 +48,15 @@ router.patch('/:postId', async (req, res, next) => {
         console.log('req.params is :', id)
 
 
-        const updatedPost = await FreePost.findByIdAndUpdate(
-            id,
+        const updatedPost = await FreePost.findOneAndUpdate(
+            { _id: id, owner: req.user._id },
             { question, code_example },
             { new: true },
         )
+
+        if (!updatedPost) {
+            return res.status(404).json({ message: "No Post found!" })
+        }
         console.log('updatedPost', updatedPost)
         res.status(202).json({ updatedPost })
     } catch (error) {
@@ -64,7 +68,7 @@ router.patch('/:postId', async (req, res, next) => {
 router.delete('/:postId', async (req, res, next) => {
     try {
 
-        await FreePost.findByIdAndDelete(req.params.postId)
+        await FreePost.findOneAndDelete({ _id: req.params.postId, owner: req.user._id })
         res.sendStatus(204)
     } catch (error) {
         next(error)
@@ -74,11 +78,11 @@ router.delete('/:postId', async (req, res, next) => {
 
 router.post('/:postId', async (req, res, next) => {
 
-    const author = req.user._id
-    const { comment } = req.body
-    const posting = req.params.postId
-
     try {
+        const author = req.user._id
+        const { comment } = req.body
+        const posting = req.params.postId
+
         const commentToCreate = await Comment.create({ author, comment, posting })
         res.json(commentToCreate)
     } catch (error) {

@@ -6,7 +6,7 @@ async function isAuthenticated(req, res, next) {
         let token = req.headers.authorization
 
         if (!token) {
-            return res.status(500).json({ message: 'No Token found.' })
+            return res.status(401).json({ message: 'No Token found.' })
         }
         token = token.replace('Bearer ', '')
 
@@ -17,7 +17,11 @@ async function isAuthenticated(req, res, next) {
         // Everything went well go to the next route
         next()
     } catch (error) {
-        return res.status(500).json({ message: 'Invalid Token.', error })
+        if (error.name?.includes("Token")) {
+            res.status(401).json({ message: 'Invalid Token.' })
+        } else {
+            next(error)
+        }
     }
 }
 
