@@ -36,7 +36,7 @@ router.post('/signup', fileUpload.single('profilePic'), (req, res, next) => {
             }
             const salt = bcrypt.genSaltSync(saltRounds)
             const hashedPassword = bcrypt.hashSync(password, salt)
-            return User.create({ email, password: hashedPassword, username, isTutor, profilePic: image.path })
+            return User.create({ email, password: hashedPassword, username, isTutor, profilePic: image?.path })
         })
         .then((createdUser) => {
             const { email, username, _id, isTutor } = createdUser
