@@ -9,9 +9,10 @@ router.get('/', async (req, res, next) => {
     try {
         const user = await User.findById(req.user._id)
         const myPosts = await FreePost.find({ owner: user._id })
-        const allHelp = await HelpRequest.find({ tutor: user._id })
+        const allHelp = await HelpRequest.find({ tutor: user._id }).populate("owner")
 
         res.json({ user, myPosts, allHelp })
+        console.log(allHelp)
     } catch (err) {
         next(err)
     }
