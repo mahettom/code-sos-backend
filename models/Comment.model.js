@@ -15,9 +15,6 @@ const commentSchema = new Schema({
         type: String,
         required: true,
         maxLength: 300
-    },
-    codeExample: {
-        type: String
     }
 },
     {
