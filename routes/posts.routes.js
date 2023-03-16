@@ -80,10 +80,10 @@ router.post('/:postId', async (req, res, next) => {
 
     try {
         const author = req.user._id
-        const { comment } = req.body
+        const { newComment } = req.body
         const posting = req.params.postId
 
-        const commentToCreate = await Comment.create({ author, comment, posting })
+        const commentToCreate = await Comment.create({ author, comment: newComment, posting })
         res.json(commentToCreate)
     } catch (error) {
         next(error)
