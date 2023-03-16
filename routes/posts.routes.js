@@ -15,6 +15,7 @@ router.get('/', async (req, res, next) => {
     }
 })
 
+
 router.post('/create', async (req, res, next) => {
     // console.log(req.user)
     const { question, code_example } = req.body
@@ -26,27 +27,24 @@ router.post('/create', async (req, res, next) => {
     }
 })
 
+
 router.get('/:postId', async (req, res, next) => {
     try {
 
         const postDetails = await FreePost.findById(req.params.postId).populate('owner')
-        const allComments = await Comment.find({ posting: req.params.postId })
+        const allComments = await Comment.find({ posting: req.params.postId }).populate('author')
         res.json({ postDetails, allComments })
     } catch (error) {
         next(error)
     }
 })
 
+
 router.patch('/:postId', async (req, res, next) => {
     try {
-        // console.log('req.params is :', req.parmams)
-        // console.log('req.body is :', req.body)
 
         const id = req.params.postId
         const { question, code_example } = req.body
-        console.log('req.body is :', question, code_example)
-        console.log('req.params is :', id)
-
 
         const updatedPost = await FreePost.findOneAndUpdate(
             { _id: id, owner: req.user._id },
@@ -57,7 +55,7 @@ router.patch('/:postId', async (req, res, next) => {
         if (!updatedPost) {
             return res.status(404).json({ message: "No Post found!" })
         }
-        console.log('updatedPost', updatedPost)
+
         res.status(202).json({ updatedPost })
     } catch (error) {
         next(error)
@@ -82,9 +80,16 @@ router.post('/:postId', async (req, res, next) => {
         const author = req.user._id
         const { newComment } = req.body
         const posting = req.params.postId
+        // console.log('FROM CREATE COMMENT ROUTE');
+        // console.log('author ->', author);
+        // console.log('new comment ->', comment);
+        // console.log('author ->', author);
 
-        const commentToCreate = await Comment.create({ author, comment: newComment, posting })
-        res.json(commentToCreate)
+
+
+        const commentToCreate = await Comment.create({ author, posting, comment })
+        res.status(201).json(commentToCreate)
+
     } catch (error) {
         next(error)
     }
