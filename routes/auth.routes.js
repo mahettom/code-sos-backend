@@ -18,7 +18,7 @@ router.post('/signup', fileUpload.single('profilePic'), (req, res, next) => {
         res.status(400).json({ message: "Provide email, password, username" })
         return
     }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    const emailRegex = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
     if (!emailRegex.test(email)) {
         res.status(400).json({ message: 'Provide a vaild email address' })
         return
