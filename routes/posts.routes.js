@@ -78,7 +78,7 @@ router.post('/:postId', async (req, res, next) => {
 
     try {
         const author = req.user._id
-        const { newComment } = req.body
+        const { comment } = req.body
         const posting = req.params.postId
         // console.log('FROM CREATE COMMENT ROUTE');
         // console.log('author ->', author);
